@@ -1,0 +1,17 @@
+{
+    "name": "digraphcms/digraph-core-types",
+    "description": "Core Noun types for Digraph CMS.",
+    "type": "digraph-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joby Elliott",
+            "email": "joby@byjoby.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Digraph\\Modules\\CoreTypes\\": "src/"
+        }
+    }
+}
