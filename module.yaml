@@ -74,7 +74,7 @@ strings:
   urls:
     proper:
       '*/version-diff': compare versions
-      '*/versions': revision list
+      '*/versions': revision history
       'versioned/edit': edit versioned page
 
 defaultnoun:
