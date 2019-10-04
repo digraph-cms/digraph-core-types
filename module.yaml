@@ -47,16 +47,16 @@ strings:
     no_versions: No current versions available
     version-diff:
       intro: |
-        <p>This page displays a summary of the differences between two versions of <a href="!parent_url">!parent_name</a>. Note that formatting is stripped before comparison, so only text changes are shown.</p>
+        <p>This page displays a summary of the differences between two versions of <a href="!parent_url">!parent_name</a>. Note that formatting is stripped before comparison, so only text changes are shown. Changes to the names of linked pages may not be reflected.</p>
         <p>Currently comparing:<p>
         <ul>
-          <li>!a_date</li>
-          <li>!b_date</li>
+          <li>"!a_name," published !a_date</li>
+          <li>"!b_name," published !b_date</li>
         </ul>
   version:
     confirm_prepopulated: Form has been pre-filled with the content of the current version.
     display_title: Display title
-    notice: <p>This page is the permanent URL of the !version_date version of "!parent_name."</p><p>If you would like to view or link to the latest version of "!parent_name," the preferred URL is:<br><a href="!parent_url">!parent_url</a></p>
+    notice: <p>This page is the "!version_name" version of "!parent_name," published !version_date.</p><p>If you would like to view or link to the current version of "!parent_name," the preferred URL is:<br><a href="!parent_url">!parent_url</a></p>
     orphaned: This !type is currently orphaned, it should have a versioned content type as its parent.
     revision_note: Revision note
     warning_unversionedparent: Parent isn't a versioned type.

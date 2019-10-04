@@ -13,7 +13,8 @@ if (!$parent) {
             [
                 'parent_name' => $noun->parent()->name(),
                 'parent_url' => $noun->parent()->url(),
-                'version_date' => $s->datetimeHTML($noun->effectiveDate())
+                'version_date' => $s->dateHTML($noun->effectiveDate()),
+                'version_name' => $noun->name()
             ]
         )
     );

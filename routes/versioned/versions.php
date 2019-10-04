@@ -27,7 +27,7 @@ foreach ($versions as $k => $v) {
     }
     echo "<td>".$v->url()->html()."</td>";
     echo "<td>";
-    echo $cms->helper('strings')->datetimeHTML($v->effectiveDate());
+    echo $cms->helper('strings')->dateHTML($v->effectiveDate());
     echo "</td>";
     echo "</tr>";
 }
@@ -40,46 +40,47 @@ if (count($versions) > 1) {
 
 ?>
 <script>
-$(()=>{
-    var $table = $('#digraph-revision-history');
-    var $rows = $table.find('tr.revision-row');
-    var updateTable = function() {
-        $a = $table.find('input.compare-radio-a:checked');
-        $b = $table.find('input.compare-radio-b:checked');
-        a = $a.attr('data-rownum');
-        b = $b.attr('data-rownum');
-        //hide bs after as position
-        if (a) {
-            $rows.each((i)=>{
-                if ($rows.eq(i).attr('data-rownum') >= a) {
-                    $rows.eq(i).addClass('hide-b');
-                }else {
-                    $rows.eq(i).removeClass('hide-b');
-                }
-            });
+    $(() => {
+        var $table = $('#digraph-revision-history');
+        var $rows = $table.find('tr.revision-row');
+        var updateTable = function() {
+            $a = $table.find('input.compare-radio-a:checked');
+            $b = $table.find('input.compare-radio-b:checked');
+            a = $a.attr('data-rownum');
+            b = $b.attr('data-rownum');
+            //hide bs after as position
+            if (a) {
+                $rows.each((i) => {
+                    if ($rows.eq(i).attr('data-rownum') >= a) {
+                        $rows.eq(i).addClass('hide-b');
+                    } else {
+                        $rows.eq(i).removeClass('hide-b');
+                    }
+                });
+            }
+            //hide as before bs position
+            if (b) {
+                $rows.each((i) => {
+                    if ($rows.eq(i).attr('data-rownum') <= b) {
+                        $rows.eq(i).addClass('hide-a');
+                    } else {
+                        $rows.eq(i).removeClass('hide-a');
+                    }
+                });
+            }
+            //highlight selection
+            if (a && b) {
+                $rows.each((i) => {
+                    if ($rows.eq(i).attr('data-rownum') >= b && $rows.eq(i).attr('data-rownum') <=
+                        a) {
+                        $rows.eq(i).addClass('highlighted');
+                    } else {
+                        $rows.eq(i).removeClass('highlighted');
+                    }
+                });
+            }
         }
-        //hide as before bs position
-        if (b) {
-            $rows.each((i)=>{
-                if ($rows.eq(i).attr('data-rownum') <= b) {
-                    $rows.eq(i).addClass('hide-a');
-                }else {
-                    $rows.eq(i).removeClass('hide-a');
-                }
-            });
-        }
-        //highlight selection
-        if (a && b) {
-            $rows.each((i)=>{
-                if ($rows.eq(i).attr('data-rownum') >= b && $rows.eq(i).attr('data-rownum') <= a) {
-                    $rows.eq(i).addClass('highlighted');
-                }else {
-                    $rows.eq(i).removeClass('highlighted');
-                }
-            });
-        }
-    }
-    updateTable();
-    $table.find('input.compare-radio').change(updateTable);
-});
+        updateTable();
+        $table.find('input.compare-radio').change(updateTable);
+    });
 </script>

@@ -31,8 +31,10 @@ $n->notice($s->string(
     [
         'parent_name' => $ap->name(),
         'parent_url' => $ap->url(),
-        'a_date' => $s->datetimeHTML($a->effectiveDate()),
-        'b_date' => $s->datetimeHTML($b->effectiveDate())
+        'a_date' => $s->dateHTML($a->effectiveDate()),
+        'b_date' => $s->dateHTML($b->effectiveDate()),
+        'a_name' => $a->name(),
+        'b_name' => $b->name(),
     ]
 ));
 
