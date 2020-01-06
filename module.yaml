@@ -13,7 +13,7 @@ types:
 navigation:
   parents:
     proper:
-      '*/version-diff': !noun/versions
+      '*/version-diff': "!noun/versions"
 
 permissions:
   url:
