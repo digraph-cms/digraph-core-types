@@ -2,7 +2,7 @@
 $versions = $package->noun()->availableVersions();
 
 echo "<h2>Revision history</h2>";
-echo "<form action='".$this->url($package['noun.dso.id'], 'version-diff', [])."' method='get'>";
+echo "<form action='" . $this->url($package['noun.dso.id'], 'version-diff', []) . "' method='get'>";
 echo "<table id='digraph-revision-history'>";
 echo "<tr>";
 if (count($versions) > 1) {
@@ -17,15 +17,15 @@ foreach ($versions as $k => $v) {
         if ($i == count($versions)) {
             echo "<td></td>";
         } else {
-            echo "<td><input type='radio' class='compare-radio compare-radio-b' value='".$v['dso.id']."' name='b' data-rownum='$i'></td>";
+            echo "<td><input type='radio' class='compare-radio compare-radio-b' value='" . $v['dso.id'] . "' name='b' data-rownum='$i'></td>";
         }
         if ($i == 1) {
             echo "<td></td>";
         } else {
-            echo "<td><input type='radio' class='compare-radio compare-radio-a' value='".$v['dso.id']."' name='a' data-rownum='$i'></td>";
+            echo "<td><input type='radio' class='compare-radio compare-radio-a' value='" . $v['dso.id'] . "' name='a' data-rownum='$i'></td>";
         }
     }
-    echo "<td>".$v->url()->html()."</td>";
+    echo "<td>" . $v->url()->html() . "</td>";
     echo "<td>";
     echo $cms->helper('strings')->dateHTML($v->effectiveDate());
     echo "</td>";
@@ -33,8 +33,8 @@ foreach ($versions as $k => $v) {
 }
 echo "</table>";
 if (count($versions) > 1) {
-    echo "<div class='fixed-controls'>";
-    echo "<input type='submit' class='cta-button green' value='Compare'></div>";
+    echo "<div class='sticky-block bottom'>";
+    echo "<input type='submit' class='cta-button green' value='Compare checked versions'></div>";
     echo "</form>";
 }
 
@@ -78,6 +78,9 @@ if (count($versions) > 1) {
                         $rows.eq(i).removeClass('highlighted');
                     }
                 });
+                $('.diff-submit-button').attr('disabled',null);
+            }else {
+                $('.diff-submit-button').attr('disabled',true);
             }
         }
         updateTable();
