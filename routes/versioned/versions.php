@@ -34,7 +34,7 @@ foreach ($versions as $k => $v) {
 echo "</table>";
 if (count($versions) > 1) {
     echo "<div class='sticky-block bottom'>";
-    echo "<input type='submit' class='cta-button green' value='Compare checked versions'></div>";
+    echo "<input type='submit' class='cta-button green diff-submit-button' value='Compare selected versions'></div>";
     echo "</form>";
 }
 
