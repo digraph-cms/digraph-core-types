@@ -39,9 +39,9 @@ class Versioned extends Noun
     {
         $links['version_list'] = '!id/versions';
         if ($c = $this->currentVersion()) {
-            $links['edit_currentversion'] = $c['dso.id'].'/edit';
+            $links['edit_currentversion'] = $c['dso.id'] . '/edit';
         }
-        $links['add_revision'] = '!id/add?type='.static::VERSION_TYPE;
+        $links['add_revision'] = '!id/add?type=' . static::VERSION_TYPE;
         return $links;
     }
 
@@ -49,7 +49,7 @@ class Versioned extends Noun
     {
         $sorted = [];
         foreach ($versions as $v) {
-            $sorted[$v->effectiveDate().'-'.$v['dso.id']] = $v;
+            $sorted[$v->effectiveDate() . '-' . $v['dso.id']] = $v;
         }
         ksort($sorted);
         return array_reverse($sorted);
@@ -67,10 +67,15 @@ class Versioned extends Noun
     public function currentVersion()
     {
         $vs = $this->availableVersions();
-        return $vs?array_shift($vs):null;
+        foreach ($this->availableVersions() as $v) {
+            if ($v->effectiveDate() <= time()) {
+                return $v;
+            }
+        }
+        return null;
     }
 
-    public function formMap(string $actions) : array
+    public function formMap(string $actions): array
     {
         $map = parent::formMap($actions);
         $map['digraph_title'] = false;

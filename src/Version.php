@@ -2,14 +2,12 @@
 /* Digraph Core | https://gitlab.com/byjoby/digraph-core | MIT License */
 namespace Digraph\Modules\CoreTypes;
 
-use League\HTMLToMarkdown\HtmlConverter;
-
 class Version extends Page
 {
     const ROUTING_NOUNS = ['version'];
     const UNDIFFABLE_TAGS = [
         'table' => 'table',
-        'img' => 'image'
+        'img' => 'image',
     ];
 
     public function searchIndexed()
@@ -29,10 +27,10 @@ class Version extends Page
 
     public function effectiveDate()
     {
-        return $this['dso.created.date'];
+        return $this['version.effective_date'] ?? $this['dso.created.date'];
     }
 
-    public function formMap(string $action) : array
+    public function formMap(string $action): array
     {
         $s = $this->factory->cms()->helper('strings');
         $map = parent::formMap($action);
@@ -41,7 +39,23 @@ class Version extends Page
         $map['digraph_title']['required'] = true;
         $map['digraph_title']['label'] = $s->string('version.display_title');
         $map['digraph_slug'] = false;
+        $map['version_effectivedate'] = [
+            'label' => 'Effective date',
+            'class' => 'datetime',
+            'weight' => 900,
+            'field' => 'version.effective_date',
+            'class' => 'datetime',
+            'required' => false,
+        ];
+        if ($action == 'edit') {
+            $map['version_effectivedate']['default'] = $this->effectiveDate();
+            $map['version_effectivedate']['required'] = true;
+        }
         if ($action == 'add') {
+            $map['version_effectivedate']['tips'] = [
+                'Optionally specify a date for this revision to go live. If this field is left blank this revision will be effective immediately upon being created.',
+            ];
+            $map['version_effectivedate']['required'] = false;
             if ($parent = $this->cms()->package()->noun()) {
                 $map['digraph_title']['default'] = $parent->title();
                 if (method_exists($parent, 'currentVersion')) {
