@@ -49,7 +49,7 @@ class Versioned extends Noun
     {
         $sorted = [];
         foreach ($versions as $v) {
-            $sorted[$v->effectiveDate() . '-' . $v['dso.id']] = $v;
+            $sorted[str_pad($v->effectiveDate(), 11, '0', STR_PAD_LEFT) . '-' . $v['dso.id']] = $v;
         }
         ksort($sorted);
         return array_reverse($sorted);
