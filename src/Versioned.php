@@ -9,6 +9,7 @@ class Versioned extends Noun
     const ROUTING_NOUNS = ['versioned'];
     const VERSION_TYPE = 'version';
     const SLUG_ENABLED = true;
+    protected $versions;
 
     public function childEdgeType($child)
     {
@@ -38,35 +39,31 @@ class Versioned extends Noun
     public function actions($links)
     {
         $links['version_list'] = '!id/versions';
-        if ($c = $this->currentVersion()) {
-            $links['edit_currentversion'] = $c['dso.id'] . '/edit';
-        }
-        $links['add_revision'] = '!id/add?type=' . static::VERSION_TYPE;
         return $links;
     }
 
     protected function sortVersions($versions)
     {
-        $sorted = [];
-        foreach ($versions as $v) {
-            $sorted[str_pad($v->effectiveDate(), 11, '0', STR_PAD_LEFT) . '-' . $v['dso.id']] = $v;
-        }
-        ksort($sorted);
-        return array_reverse($sorted);
+        usort($versions, function ($a, $b) {
+            return $b->effectiveDate() - $a->effectiveDate();
+        });
+        return $versions;
     }
 
     public function availableVersions()
     {
-        return $this->sortVersions(
-            $this->factory->cms()
-                ->helper('graph')
-                ->children($this['dso.id'], 'version', 1)
-        );
+        if ($this->versions === null) {
+            $this->versions = $this->sortVersions(
+                $this->factory->cms()
+                    ->helper('graph')
+                    ->children($this['dso.id'], 'version', 1)
+            );
+        }
+        return $this->versions;
     }
 
     public function currentVersion()
     {
-        $vs = $this->availableVersions();
         foreach ($this->availableVersions() as $v) {
             if ($v->effectiveDate() <= time()) {
                 return $v;

@@ -27,14 +27,13 @@ class Version extends Page
 
     public function effectiveDate()
     {
-        return $this['version.effective_date'] ?? $this['dso.created.date'];
+        return intval($this['version.effective_date'] ?? $this['dso.created.date']);
     }
 
     public function formMap(string $action): array
     {
         $s = $this->factory->cms()->helper('strings');
         $map = parent::formMap($action);
-        $map['digraph_name']['default'] = $s->date(time());
         $map['digraph_name']['label'] = $s->string('version.revision_note');
         $map['digraph_title']['required'] = true;
         $map['digraph_title']['label'] = $s->string('version.display_title');
