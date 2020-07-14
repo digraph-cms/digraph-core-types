@@ -1,5 +1,7 @@
 <?php
-$versions = $package->noun()->availableVersions();
+$versioned = $package->noun();
+$versions = $versioned->availableVersions();
+$permissions = $cms->helper('permissions');
 
 echo "<h2>Revision history</h2>";
 echo "<form action='" . $this->url($package['noun.dso.id'], 'version-diff', []) . "' method='get'>";
@@ -8,27 +10,52 @@ echo "<tr>";
 if (count($versions) > 1) {
     echo "<th colspan=2>Compare</th>";
 }
-echo "<th>Revision title</th><th>Publish date</th></tr>";
+echo "<th>Revision note</th><th>Date</th>";
+$url = $versioned->url('add', ['type' => $versioned::VERSION_TYPE]);
+if ($canAdd = $permissions->checkUrl($url)) {
+    echo "<th style='font-size:1rem;'>";
+    echo "<a href='$url' class='row-button row-create-item' title='Add revision'>Add revision</a>";
+    echo "</th>";
+}
+echo "</tr>";
 $i = 0;
 foreach ($versions as $k => $v) {
     $i++;
     echo "<tr class='revision-row' data-rownum='$i'>";
+    // comparison options
     if (count($versions) != 1) {
-        if ($i == count($versions)) {
-            echo "<td></td>";
-        } else {
-            echo "<td><input type='radio' class='compare-radio compare-radio-b' value='" . $v['dso.id'] . "' name='b' data-rownum='$i'></td>";
-        }
         if ($i == 1) {
             echo "<td></td>";
         } else {
             echo "<td><input type='radio' class='compare-radio compare-radio-a' value='" . $v['dso.id'] . "' name='a' data-rownum='$i'></td>";
         }
+        if ($i == count($versions)) {
+            echo "<td></td>";
+        } else {
+            echo "<td><input type='radio' class='compare-radio compare-radio-b' value='" . $v['dso.id'] . "' name='b' data-rownum='$i'></td>";
+        }
     }
-    echo "<td>" . $v->url()->html() . "</td>";
+    // revision info
+    echo "<td><a class='revision-link' href='" . $v->url() . "'>";
+    echo $v->name() . "</td>";
     echo "<td>";
     echo $cms->helper('strings')->dateHTML($v->effectiveDate());
     echo "</td>";
+    // admin tools
+    $editUrl = $v->url('edit');
+    $deleteUrl = $v->url('delete');
+    $canEdit = $permissions->checkUrl($editUrl);
+    $canDelete = $permissions->checkUrl($deleteUrl);
+    if ($canAdd || $canEdit || $canDelete) {
+        echo "<td style='white-space:nowrap;font-size:1rem;'>";
+        if ($canEdit) {
+            echo "<a href='" . $editUrl . "' title='edit' class='row-button row-edit'>edit</a>";
+        }
+        if ($canDelete) {
+            echo "<a href='" . $deleteUrl . "' title='delete' class='row-button row-delete'>delete</a>";
+        }
+        echo "</td>";
+    }
     echo "</tr>";
 }
 echo "</table>";
