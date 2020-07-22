@@ -1,4 +1,5 @@
 <?php
+$package->cache_noCache();
 $versioned = $package->noun();
 $versions = $versioned->availableVersions();
 $permissions = $cms->helper('permissions');

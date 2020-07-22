@@ -1,4 +1,5 @@
 <?php
+$package->cache_noCache();
 $noun = $package->noun();
 $url = $noun->linkUrl(null, $package['url.args']);
 

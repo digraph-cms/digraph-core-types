@@ -1,4 +1,5 @@
 <?php
+$package->cache_noCache();
 if (!$package['noun.url']) {
     $cms->helper('notifications')->error(
         $cms->helper('strings')->string('link.notifications.nourl')
