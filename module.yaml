@@ -18,14 +18,14 @@ navigation:
 permissions:
   url:
     '*/versions':
-      - allow group webmaster, editors
+      - allow group admin, editors
     '*/version-diff':
-      - allow group webmaster, editors
+      - allow group admin, editors
     'version/*':
-      - allow group webmaster, editors
+      - allow group admin, editors
     'versioned/edit':
       - deny all
-      - allow group webmaster, editors
+      - allow group admin, editors
   add:
     # deny adding version under everything
     '*/version':
