@@ -49,16 +49,11 @@ class Version extends Page
             'field' => 'version.effective_date',
             'class' => 'datetime',
             'required' => false,
+            'tips' => [
+                'Specify a date for this revision to go live. If this field is left blank this revision will be effective as of its creation date.'
+            ]
         ];
-        if ($action == 'edit') {
-            $map['version_effectivedate']['default'] = $this->effectiveDate();
-            $map['version_effectivedate']['required'] = true;
-        }
         if ($action == 'add') {
-            $map['version_effectivedate']['tips'] = [
-                'Optionally specify a date for this revision to go live. If this field is left blank this revision will be effective immediately upon being created.',
-            ];
-            $map['version_effectivedate']['required'] = false;
             if ($parent = $this->cms()->package()->noun()) {
                 $map['digraph_title']['default'] = $parent->title();
                 if (method_exists($parent, 'currentVersion')) {
