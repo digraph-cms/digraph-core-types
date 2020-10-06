@@ -27,7 +27,11 @@ class Version extends Page
 
     public function effectiveDate()
     {
-        return intval($this['version.effective_date'] ?? $this['dso.created.date']);
+        if ($this['version.effective_date']) {
+            return intval($this['version.effective_date']);
+        }else {
+            return intval($this['dso.created.date']);
+        }
     }
 
     public function formMap(string $action): array

@@ -45,7 +45,13 @@ class Versioned extends Noun
     protected function sortVersions($versions)
     {
         usort($versions, function ($a, $b) {
-            return $b->effectiveDate() - $a->effectiveDate();
+            if ($a->effectiveDate() > $b->effectiveDate()) {
+                return -1;
+            }elseif ($a->effectiveDate() < $b->effectiveDate()) {
+                return 1;
+            }else {
+                return 0;
+            }
         });
         return $versions;
     }
