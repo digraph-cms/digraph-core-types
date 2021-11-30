@@ -22,17 +22,17 @@
   "permissions": {
     "url": {
       "*/versions": [
-        "allow group admin, editors"
+        "allow group admin, editor"
       ],
       "*/version-diff": [
-        "allow group admin, editors"
+        "allow group admin, editor"
       ],
       "version/*": [
-        "allow group admin, editors"
+        "allow group admin, editor"
       ],
       "versioned/edit": [
         "deny all",
-        "allow group admin, editors"
+        "allow group admin, editor"
       ]
     },
     "add": {
